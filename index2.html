@@ -1,0 +1,125 @@
+!DOCTYPE html>
+<html lang="PT-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Do List</title>
+    <style>
+      .Cabecalho {
+        max-width: 300px;
+        max-height: 800px;
+        padding: 3%;
+        margin: auto;
+        background: cadetblue;
+        height: 500px;
+        border: 2px solid blue;
+      }
+      #hum {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      .Corpo {
+        text-align: center;
+        font-style: italic;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      #lista {
+        font-style: normal;
+        text-align: justify;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="Cabecalho">
+      <h1 id="hum">To do List</h1>
+      <div class="Corpo">
+        <p>
+          Com esta aplicação você pode adicionar, remover e finalizar tarefas de
+          maneira simples.
+        </p>
+        <div class="Conteudo">
+          <form>
+            <input
+              type="text"
+              name="task"
+              id="task"
+              placeholder="Adicione uma nova tarefa..."
+            />
+            <input
+              type="button"
+              name="botao"
+              value="Adicionar"
+              onclick="Adiciona();"
+            />
+          </form>
+        </div>
+      </div>
+      <div class="Corpo">
+        <div class="Conteudo">
+          <div class="ToDo">
+            <ul id="lista"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+      var lista1 = document.getElementById("lista");
+      var lista2;
+      var item1;
+      var item2;
+
+      Adiciona = function () {
+        item2 = document.getElementById("task");
+        item1 = lista1.childElementCount;
+        lista2 = CriarElemento(item2.value, item1);
+        lista2.appendChild(CriarRemoverTarefaBt(item1));
+        lista2.appendChild(CriarOkTarefaBt(item1));
+        lista1.appendChild(lista2);
+        item2.value = "";
+      };
+
+      RemoverTarefa = function (item1) {
+        for (i = 0; i < lista1.children.length; i++) {
+          if (lista1.children[i].getAttribute("id") == `item-${item1}`) {
+            lista1.children[i].remove();
+          }
+        }
+      };
+
+      CriarElemento = function (itemValue, item1) {
+        let lista2 = document.createElement("li");
+        lista2.setAttribute("id", `item-${item1}`);
+        lista2.appendChild(document.createTextNode(itemValue));
+        return lista2;
+      };
+
+      CriarRemoverTarefaBt = function (item1) {
+        let btn = document.createElement("button");
+        btn.setAttribute("onclick", "RemoverTarefa(" + item1 + ")");
+        btn.innerHTML = "X";
+        return btn;
+      };
+
+      CriarOkTarefaBt = function (item1) {
+        let check = document.createElement("checkbox");
+        check.innerHTML = `<input type="checkbox" id="cb-item-${item1}" onclick="line(${item1})">`;
+        return check;
+      };
+
+      line = function (item1) {
+        const cb = document.getElementById(`cb-item-${item1}`);
+
+        const text = document.getElementById(`item-${item1}`);
+
+        if (cb.checked) {
+          text.style.textDecoration = "line-through";
+        } else {
+          text.style.textDecoration = "none";
+        }
+      };
+    </script>
+  </body>
+</html>
